@@ -1,0 +1,80 @@
+server:
+  port: 10000
+  servlet:
+    # 编码
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  messages:
+    basename: i18n/messages
+  mail:
+    host: smtpdm.aliyun.com
+    port: 465
+    username: username
+    password: password
+    properties:
+      mail.smtp.ssl.enable: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    redisson:
+      # 使用config配置，大部分使用默认配置。具体配置查看https://github.com/redisson/redisson/wiki/2.-Configuration
+      config: |
+        singleServerConfig:
+          address: "redis://${spring.redis.host}:${spring.redis.port}"
+          password: ${spring.redis.password}
+          database: ${spring.redis.database}
+        codec: !<org.redisson.codec.JsonJacksonCodec> {}
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/account?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+
+
+# mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+
+# 雪花算法id
+snow-flake:
+  work-id: 0
+
+sso:
+  # cookie的name
+  cookie-name: sso-token
+  # 重定向uri的参数名，修改此参数还需要修改web项目中重定向参数名(url.js中的redirectUri变量)
+  redirect-uri-name: redirect_uri
+  # 默认的重定向地址
+  default-redirect-uri: http://blog.2cci.cn
+  # sso服务器的认证地址
+  sso-auth-uri: http://sso.2cci.cn/signin.html
+  # cookie作用域
+  domain: 2cci.cn
+  # token编解码器
+  token:
+    jwt:
+      # 加密密钥
+      secret: tucci-sso
+
+aliyun:
+  # 对象存储
+  oss:
+    endpoint: oss-cn-qingdao.aliyuncs.com
+    access-key-id: key
+    access-key-secret: secret
+    # 存储桶名称
+    bucket: tucci-sso
+    # 拼接访问地址，需要oss绑定这个域名。如果为空则使用${bucket}.${endpoint}
+    host: http://sso-res.2cci.cn
+  # 短信
+  sms:
+    access-key-id: key
+    access-key-secret: secret
+    # 签名
+    sign-name: Tucci

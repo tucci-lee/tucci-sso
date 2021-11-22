@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.tucci.sso.server.model.dao.UserProfileMapper">
+    <resultMap id="BaseResultMap" type="cn.tucci.sso.server.model.domain.UserProfile">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    uid, avatar, nickname, birthday, province, city, gender, introduction,
+    create_time, updated_time
+  </sql>
+    <select id="selectByUid" resultType="cn.tucci.sso.server.model.dto.UserProfileDTO">
+SELECT
+	t1.uid,
+	t2.username,
+	t1.avatar,
+	t1.nickname,
+	t1.birthday,
+	t1.province,
+	t1.city,
+	t1.gender,
+	t1.introduction,
+	t1.create_time
+FROM
+	user_profile t1,
+	user_account t2
+WHERE
+	t1.uid = #{uid}
+	AND t1.uid = t2.uid
+    </select>
+</mapper>

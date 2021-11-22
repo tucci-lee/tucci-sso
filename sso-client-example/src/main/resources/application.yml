@@ -1,0 +1,28 @@
+sso:
+  client:
+    web:
+      # 开启filter
+      enabled: true
+      # sso认证地址，token认证失败跳转的地址
+      sso-auth-url: http://sso.2cci.cn/signin.html
+      # token认证地址，校验token是否有效。这个路径server端需要放行
+      token-auth-url: http://sso.2cci.cn/web/token
+      # 重定向参数名称，默认为redirect_uri，需要与server端sso.redirect-uri-name保持一致
+      redirect-uri-name: redirect_uri
+      # token存储名称，默认为sso-token，需要与server端sso.cookie-name保持一致
+      cookie-name: sso-token
+      # 拦截路径，默认为/*
+      url-patterns:
+        - /*
+      # 排除拦截地址
+      exclusions:
+        - /app
+    app:
+      # 开启filter
+      enabled: true
+      # token认证地址，校验token是否有效。这个路径server端需要放行
+      token-auth-url: http://sso.2cci.cn/app/token
+      # 拦截路径，默认为/*
+      url-patterns: /*
+      # 排除拦截地址
+      exclusions: /web
