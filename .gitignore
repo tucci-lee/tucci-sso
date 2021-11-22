@@ -17,4 +17,4 @@ application-prod.yml
 
 ### VUE ###
 node_modules
-/dist
+dist
