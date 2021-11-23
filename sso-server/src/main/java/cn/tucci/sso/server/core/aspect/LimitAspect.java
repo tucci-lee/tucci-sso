@@ -51,10 +51,11 @@ public class LimitAspect {
 
         RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
         rateLimiter.trySetRate(RateType.OVERALL, rate, rateInterval, RateIntervalUnit.SECONDS);
-        rateLimiter.expire(rateInterval, TimeUnit.SECONDS);
         if (!rateLimiter.tryAcquire(1)) { // 禁止访问
+            rateLimiter.expire(rateInterval, TimeUnit.SECONDS);
             throw new ServiceException(ResultStatus.FREQUENT_REQUESTS);
         }
+        rateLimiter.expire(rateInterval, TimeUnit.SECONDS);
     }
 
     /**
