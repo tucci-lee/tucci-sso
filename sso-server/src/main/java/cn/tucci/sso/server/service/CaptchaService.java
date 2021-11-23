@@ -117,7 +117,7 @@ public class CaptchaService {
      * @param type  验证码类型
      * @param email 邮箱
      */
-    @Limit(rate = 1)
+    @Limit(rate = 5)
     public void sendEmailCaptcha(int type, String email) {
         if (email == null || email.isEmpty()) {
             return;
@@ -200,7 +200,7 @@ public class CaptchaService {
      * @param type  验证码类型
      * @param phone 手机
      */
-    @Limit(rate = 1)
+    @Limit(rate = 5)
     public void sendPhoneCaptcha(int type, String phone) {
         if (phone == null || phone.isEmpty()) {
             return;
