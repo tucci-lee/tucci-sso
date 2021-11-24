@@ -6,6 +6,8 @@ import cn.tucci.sso.server.core.utils.UrlUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author tucci.lee
  */
@@ -22,11 +24,12 @@ public class HtmlController {
     }
 
     @GetMapping("signin.html")
-    public String signin(String redirect_uri) {
+    public String signin(HttpServletRequest request) {
         Long uid = authenticator.isWebSignin();
         if (uid != null) {
-            redirect_uri = UrlUtil.getRedirectUri(redirect_uri, ssoProperties.getDefaultRedirectUri());
-            return "redirect:" + redirect_uri;
+            String redirectUri = request.getParameter(ssoProperties.getRedirectUriName());
+            redirectUri = UrlUtil.getRedirectUri(redirectUri, ssoProperties.getDefaultRedirectUri());
+            return "redirect:" + redirectUri;
         }
         return "index";
     }

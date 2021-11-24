@@ -1,5 +1,5 @@
 const host = 'http://localhost:10000';    // 请求地址,测试使用
-const redirectUri = 'redirect_uri'; // 重定向参数
+const redirectUri = 'redirectUri'; // 重定向参数
 
 const html = {
     signinHtml: '/signin.html', // 登陆页面

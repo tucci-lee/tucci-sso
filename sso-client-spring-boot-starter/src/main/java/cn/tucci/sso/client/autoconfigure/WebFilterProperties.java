@@ -7,7 +7,7 @@ public class WebFilterProperties {
 
     private String ssoAuthUrl;
     private String tokenAuthUrl;
-    private String redirectUriName = "redirect_uri";
+    private String redirectUriName = "redirectUri";
     private String cookieName = "sso-token";
     private String[] urlPatterns;
     private String[] exclusions;

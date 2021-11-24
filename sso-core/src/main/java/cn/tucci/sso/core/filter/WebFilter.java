@@ -20,7 +20,7 @@ public class WebFilter extends AbstractFilter {
 
     private String ssoAuthUrl = "http://localhost:8080/signin.html";
     private String tokenAuthUrl = "http://localhost:8080/auth";
-    private String redirectUriName = "redirect_uri";
+    private String redirectUriName = "redirectUri";
     private String cookieName = "sso-token";
 
     /**

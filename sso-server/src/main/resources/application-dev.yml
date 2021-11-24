@@ -49,7 +49,7 @@ sso:
   # cookie的name
   cookie-name: sso-token
   # 重定向uri的参数名，修改此参数还需要修改web项目中重定向参数名(url.js中的redirectUri变量)
-  redirect-uri-name: redirect_uri
+  redirect-uri-name: redirectUri
   # 默认的重定向地址
   default-redirect-uri: http://blog.2cci.cn
   # sso服务器的认证地址
