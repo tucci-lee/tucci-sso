@@ -3,8 +3,6 @@ package cn.tucci.sso.server.shiro.realm;
 import cn.tucci.sso.server.model.domain.UserAccount;
 import cn.tucci.sso.server.service.UserAccountService;
 import cn.tucci.sso.server.shiro.credential.BCryptCredentialsMatcher;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -47,19 +45,14 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
     /**
      * 认证：用户登陆
      *
-     * @param token token
+     * @param authenticationToken token
      * @return AuthenticationInfo
      * @throws AuthenticationException exception
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        Wrapper<UserAccount> wrapper = Wrappers.lambdaQuery(UserAccount.class)
-                .eq(UserAccount::getIsDeleted, Boolean.FALSE)
-                .and(w -> w.eq(UserAccount::getUsername, token.getPrincipal())
-                        .or().eq(UserAccount::getEmail, token.getPrincipal())
-                        .or().eq(UserAccount::getPhone, token.getPrincipal()));
-
-        UserAccount account = userAccountService.getOne(wrapper);
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        UserAccount account = userAccountService.getByAccount(token.getUsername());
 
         if (account == null) {
             throw new UnknownAccountException();

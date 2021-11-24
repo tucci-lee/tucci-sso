@@ -1,14 +1,13 @@
 package cn.tucci.sso.server.service;
 
-import cn.tucci.sso.server.model.dao.RegionMapper;
 import cn.tucci.sso.server.model.domain.Region;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author tucci.lee
  */
-@Service
-public class RegionService extends ServiceImpl<RegionMapper, Region> {
+public interface RegionService {
 
+    List<Region> listByParentId(String parentId);
 }

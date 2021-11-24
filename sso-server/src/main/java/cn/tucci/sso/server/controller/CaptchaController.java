@@ -44,7 +44,6 @@ public class CaptchaController {
      * 生成验证码
      * <p>
      * 生成cid为缓存key，生成的验证码为缓存value存储
-     * 登陆需要携带cid，根据cid获取验证码并校验验证码是否正确
      *
      * @return ImgCaptchaDTO
      */

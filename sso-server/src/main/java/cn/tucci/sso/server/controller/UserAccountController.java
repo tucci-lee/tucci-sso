@@ -57,7 +57,7 @@ public class UserAccountController {
     @GetMapping
     public Result<?> account() {
         Long uid = Subject.get();
-        UserAccountDTO account = userAccountService.getByUid(uid);
+        UserAccountDTO account = userAccountService.getDesensitizationByUid(uid);
         return Result.ok(account);
     }
 
@@ -72,19 +72,19 @@ public class UserAccountController {
      */
     @PostMapping("password/edit/verify")
     public Result<?> editPasswordVerify(@Validated @RequestBody PasswordVerifyBody body) {
-        Long uid;
+        UserAccount account;
         if (body.getType() == VerifyConst.SignupType.EMAIL) {
             captchaService.verifyEmailCaptcha(VerifyConst.CaptchaType.EDIT_PASSWORD, body.getEmail(), body.getCaptcha());
-            uid = userAccountService.getUidByEmail(body.getEmail());
+            account = userAccountService.getByEmail(body.getEmail());
         } else {
             captchaService.verifyPhoneCaptcha(VerifyConst.CaptchaType.EDIT_PASSWORD, body.getPhone(), body.getCaptcha());
-            uid = userAccountService.getUidByPhone(body.getPhone());
+            account = userAccountService.getByPhone(body.getPhone());
         }
 
         String token = UUID.randomUUID().toString();
         String cacheKey = CacheConst.getTokenEditPasswordKey(token);
 
-        cacheOperator.set(cacheKey, uid.toString(), CacheConst.TOKEN_EXPIRY_TIME);
+        cacheOperator.set(cacheKey, account.getUid().toString(), CacheConst.TOKEN_EXPIRY_TIME);
 
         TokenDTO result = new TokenDTO()
                 .setToken(token);
@@ -106,10 +106,7 @@ public class UserAccountController {
         Assert.notNull(uid, ResultStatus.PARAMETER_ERROR);
         cacheOperator.delete(cacheKey);
 
-        UserAccount edit = new UserAccount()
-                .setUid(Long.parseLong(uid))
-                .setPassword(BCrypt.hashpw(body.getPassword(), BCrypt.gensalt()));
-        userAccountService.editPassword(edit);
+        userAccountService.editPassword(Long.parseLong(uid), BCrypt.hashpw(body.getPassword(), BCrypt.gensalt()));
         return Result.ok();
     }
 
@@ -122,7 +119,7 @@ public class UserAccountController {
     @PostMapping("captcha/email")
     public Result<?> sendEmailCaptcha(@Validated @RequestBody AccountEmailCaptchaBody body) {
         Long uid = Subject.get();
-        UserAccount account = userAccountService.getById(uid);
+        UserAccount account = userAccountService.getByUid(uid);
         captchaService.sendEmailCaptcha(body.getType(), account.getEmail());
         return Result.ok();
     }
@@ -136,7 +133,7 @@ public class UserAccountController {
     @PostMapping("captcha/phone")
     public Result<?> sendPhoneCaptcha(@Validated @RequestBody AccountEmailCaptchaBody body) {
         Long uid = Subject.get();
-        UserAccount account = userAccountService.getById(uid);
+        UserAccount account = userAccountService.getByUid(uid);
         captchaService.sendPhoneCaptcha(body.getType(), account.getPhone());
         return Result.ok();
     }
@@ -150,7 +147,7 @@ public class UserAccountController {
     @PostMapping("email/edit/verify")
     public Result<?> editEmailVerify(@Validated @RequestBody EmailEditVerifyBody body) {
         Long uid = Subject.get();
-        UserAccount account = userAccountService.getById(uid);
+        UserAccount account = userAccountService.getByUid(uid);
         if (body.getType() == VerifyConst.SignupType.EMAIL) {
             captchaService.verifyEmailCaptcha(VerifyConst.CaptchaType.EDIT_EMAIL_VERIFY, account.getEmail(), body.getCaptcha());
         } else {
@@ -186,10 +183,7 @@ public class UserAccountController {
         Assert.isTrue(uid.toString().equals(cacheUid), ResultStatus.PARAMETER_ERROR);
         cacheOperator.delete(cacheKey);
 
-        UserAccount account = new UserAccount()
-                .setUid(uid)
-                .setEmail(body.getEmail());
-        userAccountService.editEmail(account);
+        userAccountService.editEmail(uid, body.getEmail());
         return Result.ok();
     }
 
@@ -202,7 +196,7 @@ public class UserAccountController {
     @PostMapping("phone/edit/verify")
     public Result<?> editPhoneVerify(@Validated @RequestBody PhoneEditVerifyBody body) {
         Long uid = Subject.get();
-        UserAccount account = userAccountService.getById(uid);
+        UserAccount account = userAccountService.getByUid(uid);
         if (body.getType() == VerifyConst.SignupType.EMAIL) {
             captchaService.verifyEmailCaptcha(VerifyConst.CaptchaType.EDIT_PHONE_VERIFY, account.getEmail(), body.getCaptcha());
         } else {
@@ -238,10 +232,7 @@ public class UserAccountController {
         Assert.isTrue(uid.toString().equals(cacheUid), ResultStatus.PARAMETER_ERROR);
         cacheOperator.delete(cacheKey);
 
-        UserAccount account = new UserAccount()
-                .setUid(uid)
-                .setPhone(body.getPhone());
-        userAccountService.editPhone(account);
+        userAccountService.editPhone(uid, body.getPhone());
         return Result.ok();
     }
 }

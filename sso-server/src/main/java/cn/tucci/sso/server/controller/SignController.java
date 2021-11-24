@@ -193,7 +193,7 @@ public class SignController {
                 .setStatus(status)
                 .setMsg(msg)
                 .setIp(ip);
-        asyncTaskExecutor.execute(() -> logSigninService.save(log));
+        asyncTaskExecutor.execute(() -> logSigninService.add(log));
     }
 
     /**
@@ -203,6 +203,17 @@ public class SignController {
      */
     @PostMapping("signout")
     public Result<?> signout() {
+        authenticator.signout();
+        return Result.ok();
+    }
+
+    /**
+     * 登出
+     *
+     * @return ok
+     */
+    @PostMapping("app/signout")
+    public Result<?> appSignout() {
         authenticator.signout();
         return Result.ok();
     }

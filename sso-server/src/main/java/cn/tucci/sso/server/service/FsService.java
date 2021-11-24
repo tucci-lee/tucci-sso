@@ -4,9 +4,11 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
+ * File System 文件系统操作
+ *
  * @author tucci.lee
  */
-public interface OssService {
+public interface FsService {
 
     /**
      * 头像存储前缀
@@ -36,35 +38,20 @@ public interface OssService {
         }
     }
 
-    /**
-     * 获取oss的host
-     *
-     * @return host
-     */
-    String getHost();
+    String getDomain();
 
     /**
-     * 获取全路径
+     * 上传文件
      *
      * @param key key
-     * @return 文件url
+     * @param is  流
      */
-    default String getObjectUrl(String key) {
-        return getHost() + "/" + key;
-    }
+    void upload(String key, InputStream is);
 
     /**
-     * 上传对象
-     *
-     * @param key key
-     * @param is  对象流
-     */
-    void putObject(String key, InputStream is);
-
-    /**
-     * 删除对象
+     * 删除文件
      *
      * @param key key
      */
-    void deleteObject(String key);
+    void delete(String key);
 }

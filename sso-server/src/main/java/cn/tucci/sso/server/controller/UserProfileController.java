@@ -71,7 +71,7 @@ public class UserProfileController {
         UserProfile edit = new UserProfile()
                 .setUid(uid);
         BeanUtils.copyProperties(body, edit);
-        userProfileService.updateById(edit);
+        userProfileService.editById(edit);
         return Result.ok();
     }
 }

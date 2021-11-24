@@ -1,7 +1,8 @@
-package cn.tucci.sso.server.service;
+package cn.tucci.sso.server.service.impl;
 
 import cn.tucci.sso.server.config.properties.AliyunProperties;
 import cn.tucci.sso.server.config.properties.SmsProperties;
+import cn.tucci.sso.server.service.SmsService;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.teaopenapi.models.Config;

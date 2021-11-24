@@ -1,6 +1,8 @@
 package cn.tucci.sso.server.service;
 
 /**
+ * 短信服务
+ *
  * @author tucci.lee
  */
 public interface SmsService {

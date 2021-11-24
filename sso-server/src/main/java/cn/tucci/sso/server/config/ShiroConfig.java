@@ -49,7 +49,7 @@ public class ShiroConfig {
         // 接口
         filterChainMap.put("/open/**", "anon");
         filterChainMap.put("/captcha/**", "anon");
-        filterChainMap.put("/password/**", "anon");
+        filterChainMap.put("/**/password/**", "anon");
         filterChainMap.put("/signin", "anon");
         filterChainMap.put("/signup", "anon");
         filterChainMap.put("/app/signin", "anon");

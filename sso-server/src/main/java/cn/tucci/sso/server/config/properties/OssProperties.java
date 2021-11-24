@@ -8,7 +8,7 @@ public class OssProperties {
     private String accessKeyId;
     private String accessKeySecret;
     private String bucket;
-    private String host;
+    private String domain;
 
     public String getEndpoint() {
         return endpoint;
@@ -42,11 +42,11 @@ public class OssProperties {
         this.bucket = bucket;
     }
 
-    public String getHost() {
-        return host;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }

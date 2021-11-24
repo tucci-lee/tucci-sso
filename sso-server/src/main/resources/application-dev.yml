@@ -70,8 +70,8 @@ aliyun:
     access-key-secret: secret
     # 存储桶名称
     bucket: tucci-sso
-    # 拼接访问地址，需要oss绑定这个域名。如果为空则使用${bucket}.${endpoint}
-    host: http://sso-res.2cci.cn
+    # 拼接访问地址，需要oss绑定这个域名。如果为空则拼接${bucket}.${endpoint}/
+    domain: http://sso-res.2cci.cn/
   # 短信
   sms:
     access-key-id: key

@@ -4,8 +4,6 @@ import cn.tucci.sso.server.core.response.Result;
 import cn.tucci.sso.server.model.domain.Region;
 import cn.tucci.sso.server.model.query.RegionQuery;
 import cn.tucci.sso.server.service.RegionService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +32,7 @@ public class OpenApiController {
      */
     @GetMapping("region")
     public Result<?> list(@Validated RegionQuery query) {
-        Wrapper<Region> wrapper = Wrappers.lambdaQuery(Region.class)
-                .eq(Region::getParentId, query.getParentId());
-        List<Region> regions = regionService.list(wrapper);
+        List<Region> regions = regionService.listByParentId(query.getParentId());
         return Result.ok(regions);
     }
 }
