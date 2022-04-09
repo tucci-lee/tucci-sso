@@ -1,3 +1,4 @@
+已下线，参考库authorize \
 此项目为同域名的sso（*.2cci.cn），多域名可自己扩展，如：携带token重定向、登陆成功后携带token访问其他域名，让其他域名存储cookie等\
 [线上地址](http://sso.2cci.cn) \
 client web演示地址：http://example.sso.2cci.cn/web \
